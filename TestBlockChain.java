@@ -6,13 +6,15 @@ public class TestBlockChain {
         boolean verified;
         Blockchain chain = new Blockchain();
         long time = System.currentTimeMillis();
-        Block block = new Block("genesis", null, time, 3);
+        int prefix = 3;
+
+        Block block = new Block("genesis", null, time, prefix);
 
         chain.addBlock(block);
         chain.verify();
         // add block
         for (int i = 0; i < 5; i++) {
-            block = new Block("Block-" + i, chain.prevBlock().getHash(), System.currentTimeMillis(), 10);
+            block = new Block("Block-" + i, chain.prevBlock().getHash(), System.currentTimeMillis(), prefix);
             chain.addBlock(block);
             chain.verify();
         }
@@ -27,6 +29,5 @@ public class TestBlockChain {
 
         // print the entire chain
         System.out.print(chain);
-
     }
 }
