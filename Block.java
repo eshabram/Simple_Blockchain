@@ -91,7 +91,7 @@ public class Block {
     }
 
     // A method that converts a hex hash into its binary string version for mining
-    public static String fromHex(String hex) {
+    public  String toBin(String hex) {
         StringBuilder binaryStringBuilder = new StringBuilder();
         for (int i = 0; i < hex.length(); i++) {
             char hexChar = hex.charAt(i);

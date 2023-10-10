@@ -19,6 +19,7 @@ public class Blockchain extends Block{
 
     public void addBlock(Block block) {
         chain.add(block);
+        this.chainSize++;
     }
 
     public boolean verify() {
@@ -32,6 +33,13 @@ public class Blockchain extends Block{
             block = iter.previous();
             String hash = block.getHash();
             String genHash = block.toHex(block.generateBlockHash());
+            int prefix = block.getPrefix();
+            String prefixString = "";
+
+            // build a prefix string for comparison during the verification
+            for (int i = 0; i < prefix; i++ ) {
+                prefixString += "0";
+            }
 
             // check that the current hash is correct
             if (!hash.equals(genHash)) {
@@ -44,6 +52,12 @@ public class Blockchain extends Block{
                     verified = false;
                     break;
                 }
+            }
+            // verify that the block was mined properly by checking that the hash
+            // matches the recorded prefix number of zeroes.
+            if (!toBin(hash).substring(0, prefix).equals(prefixString)) {
+                verified = false;
+                break;
             }
 
             prevHash = block.getPrevHash();
